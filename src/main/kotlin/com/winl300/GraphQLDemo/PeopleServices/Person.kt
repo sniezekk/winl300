@@ -18,6 +18,13 @@ data class Person (
     // randomly set id each time, as it does not matter outside of the demo, will be used for updates and deletes
     val id: UUID = UUID.randomUUID()
         ) {
+
+    val friends = mutableListOf<Person>()
+
+    //used to add friends to the list
+    fun addFriends(newFriends: List<Person>) {
+        friends.addAll(newFriends)
+    }
     companion object {
         /**
          * This companion object creates a new person object from a PersonInput object

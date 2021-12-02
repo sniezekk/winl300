@@ -5,6 +5,9 @@
 Korey Sniezek
 ###Project Name: 
 GraphQL Demo For WINL300
+###Project Tech:
+Built with IntelliJ, using Maven package manager. 
+Uses Kotlin, Java, GraphQL, SpringBoot, and NetflixDGS
 ###Project Purpose: 
 This demo project explores how to use the Netflix DGS framework of GraphQL within the Spring-Boot framework.
 ###Project Description:

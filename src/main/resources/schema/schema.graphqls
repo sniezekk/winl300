@@ -22,6 +22,8 @@ type Person {
     age: Int
     # The id of the person
     id: String
+    # The person's friends
+    friends: [Person]
 }
 
 # The input object for a person

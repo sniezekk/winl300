@@ -29,6 +29,12 @@ class MockDatabaseService {
         Person(name = "Lucy McPersonFace", age = 3),
     )
 
+    // pointless assignment to a variable shouldn't be necessary, keeping it because it is good for a demo
+    val test = people.forEach{
+        it.addFriends(
+            people.asSequence().shuffled().take(3).toList()
+        )
+    }
     /**
      * This adds a person to the mock database, validation is done by higher layer service
      *
