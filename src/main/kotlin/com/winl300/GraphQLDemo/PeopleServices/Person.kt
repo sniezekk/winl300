@@ -11,10 +11,12 @@ import java.util.*
  *  methods
  */
 data class Person (
-            val name: String,
-            val age: Int,
-            // randomly set id each time, as it does not matter outside of the demo, will be used for updates and deletes
-            val id: UUID = UUID.randomUUID()
+    // string representation of a person's name
+    val name: String,
+    // integer age
+    val age: Int,
+    // randomly set id each time, as it does not matter outside of the demo, will be used for updates and deletes
+    val id: UUID = UUID.randomUUID()
         ) {
     companion object {
         /**

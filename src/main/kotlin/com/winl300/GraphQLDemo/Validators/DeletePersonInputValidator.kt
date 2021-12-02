@@ -1,14 +1,13 @@
 package com.winl300.GraphQLDemo.Validators
 
 import com.winl300.GraphQLDemo.PeopleServices.DeletePersonInput
-import com.winl300.GraphQLDemo.PeopleServices.PeopleService
 import com.winl300.GraphQLDemo.PeopleServices.Person
 import com.winl300.GraphQLDemo.Validators.ErrorCodes.InputErrors
 import com.winl300.GraphQLDemo.Validators.ErrorCodes.UserInputException
 import org.springframework.stereotype.Component
 import java.util.*
 
-typealias getPersonByIdProvider = (UUID) -> Person?
+typealias GetPersonByIdProvider = (UUID) -> Person?
 /**
  * This class validates the delete person input and throws appropriate errors if invalid
  *
@@ -17,7 +16,7 @@ typealias getPersonByIdProvider = (UUID) -> Person?
  */
 @Component
 class DeletePersonInputValidator (
-    private val getPersonById: getPersonByIdProvider
+    private val getPersonById: GetPersonByIdProvider
         ) {
 
     // top level validation

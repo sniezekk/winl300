@@ -1,6 +1,8 @@
 type Query {
     # Filter people by name and age, return all if no argument is passed
     people(nameFilter: String, ageFilter: Int): [Person]
+    # Get a person by id
+    getPersonById(id: String): Person
 }
 
 type Mutation {

@@ -4,12 +4,10 @@ import com.netflix.graphql.dgs.DgsComponent
 import com.netflix.graphql.dgs.DgsMutation
 import com.netflix.graphql.dgs.DgsQuery
 import com.netflix.graphql.dgs.InputArgument
-import com.winl300.GraphQLDemo.PeopleServices.PeopleService
-import com.winl300.GraphQLDemo.PeopleServices.Person
-import com.winl300.GraphQLDemo.PeopleServices.CreatePersonInput
-import com.winl300.GraphQLDemo.PeopleServices.DeletePersonInput
+import com.winl300.GraphQLDemo.PeopleServices.*
 import com.winl300.GraphQLDemo.Validators.CreatePersonInputValidator
 import com.winl300.GraphQLDemo.Validators.DeletePersonInputValidator
+import com.winl300.GraphQLDemo.Validators.UpdatePersonInputValidator
 import java.util.*
 
 /**
@@ -24,7 +22,8 @@ import java.util.*
 class DataFetcher (
             private val peopleService: PeopleService,
             private val createPersonInputValidator: CreatePersonInputValidator,
-            private val deletePersonInputValidator: DeletePersonInputValidator
+            private val deletePersonInputValidator: DeletePersonInputValidator,
+            private val updatePersonInputValidator: UpdatePersonInputValidator
         ) {
 
     /**
@@ -38,6 +37,19 @@ class DataFetcher (
     @DgsQuery
     fun people(@InputArgument nameFilter: String?, @InputArgument ageFilter: Int?): List<Person> {
         return peopleService.getFiltered(nameFilter, ageFilter)
+    }
+
+    /**
+     * This query gets a person object by id, returns null if id is not found
+     *
+     * @author Korey Sniezek
+     * @date 1 Dec 2021
+     * @param id, a string UUID
+     * @return Person object, or null
+     */
+    @DgsQuery
+    fun getPersonById(@InputArgument id: String): Person? {
+        return peopleService.getPersonById(UUID.fromString(id))
     }
 
     /**
@@ -70,5 +82,21 @@ class DataFetcher (
         deletePersonInputValidator.validateAndThrowIfErrors(input)
         return peopleService.deletePersonById(UUID.fromString(input.id))
     }
+
+    /**
+     * This function calls the validator for the updatePersonInputObject, then updates the person object through the
+     *   people service
+     *
+     *   @author Korey Sniezek
+     *   @date 1 Dec 2021
+     *   @param input, Update person input
+     *   @return a Person object or null
+     */
+    @DgsMutation
+    fun updatePerson(@InputArgument input: UpdatePersonInput): Person? {
+        updatePersonInputValidator.validateAndThrowIfErrors(input)
+        return peopleService.updatePerson(input)
+    }
+
 }
 

@@ -27,7 +27,6 @@ class MockDatabaseService {
         Person(name = "Joe Dirt", age = 1),
         Person(name = "Bob Dole", age = 100),
         Person(name = "Lucy McPersonFace", age = 3),
-
     )
 
     /**
@@ -39,5 +38,16 @@ class MockDatabaseService {
      */
     fun addPerson(input: Person) {
         people.add(input)
+    }
+
+    /**
+     * This removes a person from the mock database, validation is done by a higher layer service
+     *
+     * @author Korey Sniezek
+     * @date 1 Dec 2021
+     * @param input, a person object to be deleted
+     */
+    fun removePerson(input: Person) {
+        people.remove(input)
     }
 }

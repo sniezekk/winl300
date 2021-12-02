@@ -4,6 +4,12 @@ import com.winl300.GraphQLDemo.MockData.MockDatabaseService
 import org.springframework.stereotype.Component
 import java.util.*
 
+/**
+ * This service acts as a layer between the mock database and the rest of the services
+ *
+ * @author Korey Sniezek
+ * @date 1 Dec 2021
+ */
 @Component
 class PeopleService(
         private val database: MockDatabaseService
@@ -60,9 +66,29 @@ class PeopleService(
      * @param id UUID
      * @return a person or Null
      */
-    fun deletePersonById(id: UUID): Person? {
+    fun deletePersonById(id: UUID): Person {
         val person = database.people.first{ it.id == id}
-        database.people.remove(person)
+        database.removePerson(person)
         return person
+    }
+
+    /**
+     * Update person creates a new person object from the old person object, plus any changes that have been made.
+     *   it deletes it from the database and readds the new object to reduce complexity
+     *
+     *   @author Korey Sniezek
+     *   @param input UpdatePersonInput object
+     *   @date 1 Dec 2021
+     */
+    fun updatePerson(input: UpdatePersonInput): Person {
+        val id = UUID.fromString(input.id)
+        val oldPerson = deletePersonById(id)
+        val newPerson = Person(
+                    id = id,
+                    name = input.newName ?: oldPerson.name,
+                    age = input.newAge ?: oldPerson.age
+                )
+        database.addPerson(newPerson)
+        return newPerson
     }
 }

@@ -8,5 +8,6 @@ package com.winl300.GraphQLDemo.PeopleServices
  * @param id String UUID
  */
 data class DeletePersonInput (
+    // String representation of a UUID
     val id: String
         )

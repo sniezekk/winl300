@@ -5,6 +5,7 @@ import com.winl300.GraphQLDemo.MockData.MockDatabaseService
 import com.winl300.GraphQLDemo.PeopleServices.PeopleService
 import com.winl300.GraphQLDemo.Validators.CreatePersonInputValidator
 import com.winl300.GraphQLDemo.Validators.DeletePersonInputValidator
+import com.winl300.GraphQLDemo.Validators.UpdatePersonInputValidator
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -32,17 +33,23 @@ class BeanConfiguration {
     fun dataFetcher(): DataFetcher = DataFetcher(
         peopleService(),
         createPersonInputValidator(),
-        deletePersonInputValidator()
+        deletePersonInputValidator(),
+        updatePersonInputValidator()
     )
 
+    //The beans below are all initialized with a provider external to the class itself, look at each validator for further information
     @Bean
-    fun createPersonInputValidator(): CreatePersonInputValidator = CreatePersonInputValidator() {
-        peopleService().getFiltered(nameFilter = it)
+    fun createPersonInputValidator(): CreatePersonInputValidator = CreatePersonInputValidator() { name ->
+        peopleService().getFiltered(nameFilter = name)
     }
 
+    @Bean
+    fun deletePersonInputValidator(): DeletePersonInputValidator = DeletePersonInputValidator() { id ->
+        peopleService().getPersonById(id)
+    }
 
     @Bean
-    fun deletePersonInputValidator(): DeletePersonInputValidator = DeletePersonInputValidator() {
-        peopleService().getPersonById(it)
+    fun updatePersonInputValidator(): UpdatePersonInputValidator = UpdatePersonInputValidator() { id ->
+        peopleService().getPersonById(id)
     }
 }

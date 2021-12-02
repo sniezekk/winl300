@@ -19,5 +19,8 @@ enum class InputErrors : BaseError {
     },
     PERSON_DOES_NOT_EXIST{
         override fun getErrorMessage(): String = "The person does not exist. Id: "
+    },
+    NO_UPDATES_FOUND{
+        override fun getErrorMessage(): String = "No changes were attached to this input"
     }
 }
