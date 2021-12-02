@@ -1,9 +1,6 @@
 package com.winl300.GraphQLDemo
 
-import com.netflix.graphql.dgs.DgsComponent
-import com.netflix.graphql.dgs.DgsMutation
-import com.netflix.graphql.dgs.DgsQuery
-import com.netflix.graphql.dgs.InputArgument
+import com.netflix.graphql.dgs.*
 import com.winl300.GraphQLDemo.PeopleServices.*
 import com.winl300.GraphQLDemo.Validators.CreatePersonInputValidator
 import com.winl300.GraphQLDemo.Validators.DeletePersonInputValidator
@@ -96,6 +93,11 @@ class DataFetcher (
     fun updatePerson(@InputArgument input: UpdatePersonInput): Person? {
         updatePersonInputValidator.validateAndThrowIfErrors(input)
         return peopleService.updatePerson(input)
+    }
+
+    @DgsData(parentType = "Person")
+    fun getRandomPerson(): Person {
+        return peopleService.getRandomPerson()
     }
 
 }

@@ -91,4 +91,16 @@ class PeopleService(
         database.addPerson(newPerson)
         return newPerson
     }
+
+    /**
+     * Probably not the most elegant way to get a random person from the list, but will be used to help demonstrate
+     *   calling functions from graphql
+     *
+     *   @author Korey Sniezek
+     *   @return a random Person
+     *   @date 1 Dec 2021
+     */
+    fun getRandomPerson(): Person {
+        return database.people.asSequence().shuffled().take(1).first()
+    }
 }

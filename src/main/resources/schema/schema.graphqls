@@ -24,6 +24,8 @@ type Person {
     id: String
     # The person's friends
     friends: [Person]
+    # A random person they may see
+    getRandomPerson: Person
 }
 
 # The input object for a person
