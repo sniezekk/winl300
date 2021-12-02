@@ -1,8 +1,25 @@
 type Query {
-    people(nameFilter: String): [Person]
+    # Filter people by name and age, return all if no argument is passed
+    people(nameFilter: String, ageFilter: Int): [Person]
 }
 
+type Mutation {
+    # Add a person to the internal data
+     addPerson(input: PersonInput) :Person
+}
+
+# A representation of a person
 type Person {
+    # The Person's full name
     name: String
+    # The Person's age, in years
+    age: Int
+}
+
+# The input object for a person
+input PersonInput {
+    # The Person's full name
+    name: String,
+    # The Person's age
     age: Int
 }

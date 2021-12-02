@@ -11,4 +11,17 @@ package com.winl300.GraphQLDemo.PeopleServices
 data class Person (
             val name: String,
             val age: Int
-        )
+        ) {
+    companion object {
+        /**
+         * This companion object creates a new person object from a PersonInput object
+         *
+         * @author Korey Sniezek
+         * @date 25Nov2021
+         * @param input, a PersonInput object
+         */
+        fun fromInput(input: CreatePersonInput): Person {
+            return Person(name = input.name, age = input.age)
+        }
+    }
+}

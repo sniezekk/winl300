@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.ImportAutoConfiguration
 
 /**
  * The purpose of this class is to create top level beans that do not have a dependency on anything else
- *   this initializes them at startup
+ *   this initializes them at startup, see the BeanConfiguration class for an idea of what beans are getting created
  *
- *   Author: Korey Sniezek
- *   Date: 25Nov2021
+ *   @uthor: Korey Sniezek
+ *   @date: 25Nov2021
  */
 @ImportAutoConfiguration(
         value = [
