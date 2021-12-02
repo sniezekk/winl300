@@ -5,7 +5,11 @@ type Query {
 
 type Mutation {
     # Add a person to the internal data
-     addPerson(input: PersonInput) :Person
+    addPerson(input: CreatePersonInput) :Person
+    # Delete a person from the database
+    deletePerson(input: DeletePersonInput) :Person
+    # Update a person in the databasse
+    updatePerson(input: UpdatePersonInput) :Person
 }
 
 # A representation of a person
@@ -14,12 +18,29 @@ type Person {
     name: String
     # The Person's age, in years
     age: Int
+    # The id of the person
+    id: String
 }
 
 # The input object for a person
-input PersonInput {
+input CreatePersonInput {
     # The Person's full name
     name: String,
     # The Person's age
     age: Int
+}
+# The input required to change a person
+input UpdatePersonInput {
+    # Id is required in order to update a person
+    id: String!,
+    # the new name to assign to the person
+    newName: String,
+    # the new age to assign to the person
+    newAge: Int
+}
+
+# The person to delete by id
+input DeletePersonInput {
+    # The id of the person to be deleted
+    id: String!
 }

@@ -16,4 +16,4 @@ microservice architecture environment.
 ####Spring-Boot project was initialized with the Spring-Boot initializer at https://start.spring.io/
 ####NetflixDGS Initial Setup Instructions: https://netflix.github.io/dgs/getting-started/
 ####General Tutorial for GraphQL: https://www.howtographql.com/
-####https://betterprogramming.pub/error-handling-with-graphql-spring-boot-and-kotlin-ed55f9da4221
+####Error Handling Resource: https://betterprogramming.pub/error-handling-with-graphql-spring-boot-and-kotlin-ed55f9da4221

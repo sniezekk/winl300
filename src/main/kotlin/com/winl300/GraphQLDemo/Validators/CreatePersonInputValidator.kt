@@ -1,11 +1,12 @@
 package com.winl300.GraphQLDemo.Validators
 
-import com.winl300.GraphQLDemo.PeopleServices.PeopleService
 import com.winl300.GraphQLDemo.PeopleServices.CreatePersonInput
+import com.winl300.GraphQLDemo.PeopleServices.Person
 import com.winl300.GraphQLDemo.Validators.ErrorCodes.InputErrors
 import com.winl300.GraphQLDemo.Validators.ErrorCodes.UserInputException
 import org.springframework.stereotype.Component
 
+typealias getPeopleByNameProvider = (String) -> List<Person>
 /**
  * This class validates CreatePersonInput objects. If any of the validation fails, it throws an exception with an appropriate
  *    message
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component
  *    @date 1 Dec 2021
  */
 @Component
-class CreatePersonInputValidator(private val peopleService: PeopleService) {
+class CreatePersonInputValidator(private val getPersonByName: getPeopleByNameProvider) {
 
     // top level validation function, calls other validation functions
     fun validateAndThrowIfErrors(input: CreatePersonInput) {
@@ -25,7 +26,7 @@ class CreatePersonInputValidator(private val peopleService: PeopleService) {
 
     // person cannot exist in database
     private fun validatePersonDoesNotExistInDatabase(input: CreatePersonInput) {
-        if(peopleService.getFiltered(nameFilter = input.name).isNotEmpty()) throw UserInputException(
+        if(getPersonByName(input.name).isNotEmpty()) throw UserInputException(
             errorMessage = InputErrors.PERSON_ALREADY_EXISTS.getErrorMessage()
         )
     }

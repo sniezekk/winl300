@@ -1,5 +1,7 @@
 package com.winl300.GraphQLDemo.PeopleServices
 
+import java.util.*
+
 /**
  * The purpose of this class is to contain common information about a person.
  *
@@ -10,7 +12,9 @@ package com.winl300.GraphQLDemo.PeopleServices
  */
 data class Person (
             val name: String,
-            val age: Int
+            val age: Int,
+            // randomly set id each time, as it does not matter outside of the demo, will be used for updates and deletes
+            val id: UUID = UUID.randomUUID()
         ) {
     companion object {
         /**

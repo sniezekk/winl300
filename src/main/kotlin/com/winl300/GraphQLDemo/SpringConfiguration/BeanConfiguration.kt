@@ -4,6 +4,7 @@ import com.winl300.GraphQLDemo.DataFetcher
 import com.winl300.GraphQLDemo.MockData.MockDatabaseService
 import com.winl300.GraphQLDemo.PeopleServices.PeopleService
 import com.winl300.GraphQLDemo.Validators.CreatePersonInputValidator
+import com.winl300.GraphQLDemo.Validators.DeletePersonInputValidator
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -28,8 +29,20 @@ class BeanConfiguration {
     fun peopleService(): PeopleService = PeopleService(mockDatabaseService())
 
     @Bean
-    fun dataFetcher(): DataFetcher = DataFetcher(peopleService(), personInputValidator())
+    fun dataFetcher(): DataFetcher = DataFetcher(
+        peopleService(),
+        createPersonInputValidator(),
+        deletePersonInputValidator()
+    )
 
     @Bean
-    fun personInputValidator(): CreatePersonInputValidator = CreatePersonInputValidator(peopleService())
+    fun createPersonInputValidator(): CreatePersonInputValidator = CreatePersonInputValidator() {
+        peopleService().getFiltered(nameFilter = it)
+    }
+
+
+    @Bean
+    fun deletePersonInputValidator(): DeletePersonInputValidator = DeletePersonInputValidator() {
+        peopleService().getPersonById(it)
+    }
 }

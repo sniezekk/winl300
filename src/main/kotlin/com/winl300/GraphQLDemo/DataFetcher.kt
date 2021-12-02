@@ -7,7 +7,10 @@ import com.netflix.graphql.dgs.InputArgument
 import com.winl300.GraphQLDemo.PeopleServices.PeopleService
 import com.winl300.GraphQLDemo.PeopleServices.Person
 import com.winl300.GraphQLDemo.PeopleServices.CreatePersonInput
+import com.winl300.GraphQLDemo.PeopleServices.DeletePersonInput
 import com.winl300.GraphQLDemo.Validators.CreatePersonInputValidator
+import com.winl300.GraphQLDemo.Validators.DeletePersonInputValidator
+import java.util.*
 
 /**
  * The purpose of this class is to interface with the GraphQL/Netflix DGS schema and pass the input arguments
@@ -20,7 +23,8 @@ import com.winl300.GraphQLDemo.Validators.CreatePersonInputValidator
 @DgsComponent
 class DataFetcher (
             private val peopleService: PeopleService,
-            private val createPersonInputValidator: CreatePersonInputValidator
+            private val createPersonInputValidator: CreatePersonInputValidator,
+            private val deletePersonInputValidator: DeletePersonInputValidator
         ) {
 
     /**
@@ -32,7 +36,7 @@ class DataFetcher (
      * @return List<Person> of People objects
      */
     @DgsQuery
-    fun people(@InputArgument nameFilter : String?, @InputArgument ageFilter: Int?): List<Person> {
+    fun people(@InputArgument nameFilter: String?, @InputArgument ageFilter: Int?): List<Person> {
         return peopleService.getFiltered(nameFilter, ageFilter)
     }
 
@@ -43,11 +47,28 @@ class DataFetcher (
      *   @author Korey Sniezek
      *   @date 1 Dec 2021
      *   @param input CreateUserInput object
+     *   @return a Person object or null
      */
     @DgsMutation
     fun addPerson(@InputArgument input: CreatePersonInput): Person? {
         createPersonInputValidator.validateAndThrowIfErrors(input)
         return peopleService.addPerson(input)
-        }
     }
+
+
+    /**
+     * This function is responsible for taking user input, validating that the person exists, deleting the person from
+     *   the database, and returning the deleted person
+     *
+     *   @author Korey Sniezek
+     *   @date 1 Dec 2021
+     *   @param input DeletePersonInput
+     *   @return a Person object, or null
+     */
+    @DgsMutation
+    fun deletePerson(@InputArgument input: DeletePersonInput): Person? {
+        deletePersonInputValidator.validateAndThrowIfErrors(input)
+        return peopleService.deletePersonById(UUID.fromString(input.id))
+    }
+}
 
